@@ -45,13 +45,22 @@ class NewVisitorTest(unittest.TestCase):
 
         # There is still a text box inviting her to add another item. He enters
         # "Buy some downloadable content"
-        self.fail('finish the test!')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Buy some downloadable content')
+        inputbox.send_keys(Keys.ENTER)
 
         # The page updates again, and now shows both items in the list
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: Buy some games', [row.text for row in rows])
+        self.assertIn('2: Buy some downloadable content',
+                      [row.text for row in rows]
+                      )
 
         # He wonders whether the site will remember her list. Then he sees that
         # the site has generated a unique URL for him -- there is some
         # expanatory text to that effect.
+        self.fail('finish the test!')
 
         # He visits that URL - the to-do list is still there.
 
