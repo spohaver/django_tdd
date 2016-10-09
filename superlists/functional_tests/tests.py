@@ -1,9 +1,9 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import unittest
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -18,9 +18,9 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn(row_text, [row.text for row in rows])
 
     def test_start_list_and_retrieve_it_later(self):
-        # Sean has head about a cool new online to-do app.
+        # Selvikin has head about a cool new online to-do app.
         # He goes to check its homepage
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # He notices the page title and header mention to-do lists
         self.assertIn('To-Do', self.browser.title), \
@@ -43,7 +43,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table('1: Buy some games')
 
-        # There is still a text box inviting her to add another item. He enters
+        # There is still a text box inviting him to add another item. He enters
         # "Buy some downloadable content"
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy some downloadable content')
@@ -53,7 +53,7 @@ class NewVisitorTest(unittest.TestCase):
         self.check_for_row_in_list_table('1: Buy some games')
         self.check_for_row_in_list_table('2: Buy some downloadable content')
 
-        # He wonders whether the site will remember her list. Then he sees that
+        # He wonders whether the site will remember his list. Then he sees that
         # the site has generated a unique URL for him -- there is some
         # expanatory text to that effect.
         self.fail('finish the test!')
@@ -62,5 +62,5 @@ class NewVisitorTest(unittest.TestCase):
 
         # Satisfied he goes back to playing some other games.
 
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
+#if __name__ == '__main__':
+#    unittest.main(warnings='ignore')
